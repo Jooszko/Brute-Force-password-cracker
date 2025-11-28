@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Name="blnFire" Content="Fire" Click="btnFire_Click" Margin="35,69,660,98"/>
+        <TextBlock Name="tbInfo" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Left" Width="500" Margin="215,79,0,0" RenderTransformOrigin="-0.059,-2.818"/>
+        <TextBlock Text="Password:" Margin="38,132,632,53"/>
+        <PasswordBox x:Name="pwdZip" Margin="40,154,650,34"/>
 
+        <Button Content="Read ZIP"
+        Click="ReadEncryptedFile_Click" Margin="35,2,660,165" Grid.Row="1"/>
     </Grid>
 </Window>

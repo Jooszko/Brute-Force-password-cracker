@@ -9,6 +9,7 @@ namespace Brute_Force_password_cracker
     /// </summary>
     public partial class App : Application
     {
+
     }
 
 }
