@@ -58,6 +58,8 @@ namespace Brute_Force_password_cracker
             {
                 using (ZipFile zip = ZipFile.Read(zipPath))
                 {
+
+
                     zip.Password = password;
 
 
@@ -90,6 +92,82 @@ namespace Brute_Force_password_cracker
             catch (BadPasswordException)
             {
                 MessageBox.Show("Error bad password");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void DictionaryAttack_Click(object sender, RoutedEventArgs e)
+        {
+            EncryptedFileDictionaryPassword();
+        }
+
+
+        private bool VerifyPassword(string passwordToTest, string zipPath)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            try
+            {
+                using (ZipFile zip = ZipFile.Read(zipPath))
+                {
+                    zip.Password = passwordToTest;
+
+                    ZipEntry entry = zip.Entries.FirstOrDefault(e => !e.IsDirectory);
+
+                    if (entry == null) return false;
+
+                    entry.Extract(Stream.Null);
+                }
+
+                return true;
+            }
+            catch (BadPasswordException)
+            {
+                return false;
+            }
+            catch (ZipException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void EncryptedFileDictionaryPassword()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string dictionaryPath = Path.Combine(baseDirectory, "password-wordlist.txt");
+
+            string[] txt = File.ReadAllLines(dictionaryPath);
+            string zipPath = tbInfo.Text;
+
+            if (!File.Exists(zipPath))
+            {
+                MessageBox.Show("Choose correct ZIP file.");
+                return;
+            }
+
+            try
+            {
+                bool checke = false;
+                foreach (var entry in txt)
+                {
+                    bool check = VerifyPassword(entry, zipPath);
+                    if (check)
+                    {
+                        MessageBox.Show($"Password found: {entry}");
+                        checke = true;
+                        break;
+                    }
+                }
+                if(!checke)
+                    MessageBox.Show("Password not found in dictionary.");
             }
             catch (Exception ex)
             {
