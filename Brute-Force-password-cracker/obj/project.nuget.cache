@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "NkNwpVDcuS8=",
+  "dgSpecHash": "o0aUPuKY5oeeL+NzhFptY+XZnnLEWepb32jOVE04/5htNq7EYkLUYf01XFyd/le0NAfnVVVL7+Ko0IFDiTeNxw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+  "projectFilePath": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\arkad\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512"
+    "C:\\Users\\jonas\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512"
   ],
   "logs": [
     {

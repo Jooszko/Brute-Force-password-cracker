@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Text.RegularExpressions;
 
 namespace Brute_Force_password_cracker
 {
@@ -43,6 +44,44 @@ namespace Brute_Force_password_cracker
 
         private void ReadEncryptedFile_Click(object sender, RoutedEventArgs e)
         {
+            int minPassLen = 0;
+            int maxPassLen = 0;
+
+            bool lettersPass = CbLeters.IsChecked == true;
+            bool numbersPass = CbNumbers.IsChecked == true;
+            bool symbolsPass = CbSymbols.IsChecked == true;
+
+            int.TryParse(InputMin.Text, out minPassLen);
+            int.TryParse(InputMax.Text, out maxPassLen);
+
+            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            string dictionaryNumbers = "0123456789";
+
+            string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
+
+            string currentCharacterBase = "";
+
+            if (lettersPass)
+            {
+                currentCharacterBase += dictionaryLetters;
+            }
+
+            if (numbersPass)
+            {
+                currentCharacterBase += dictionaryNumbers;
+            }
+
+            if (symbolsPass)
+            {
+                currentCharacterBase += dictionarySigns;
+            }
+
+            //currentCharacterBase  - słownik z którego finalnie tworzymy słowa do testowania
+
+            MessageBox.Show($"{currentCharacterBase}");
+
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             string zipPath = tbInfo.Text;
@@ -63,8 +102,7 @@ namespace Brute_Force_password_cracker
                     zip.Password = password;
 
 
-                    ZipEntry entry = zip
-                        .FirstOrDefault(e => e.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase));
+                    ZipEntry entry = zip.FirstOrDefault(e => e.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase));
 
                     if (entry == null)
                     {
@@ -174,5 +212,23 @@ namespace Brute_Force_password_cracker
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void ValidateCheckBox(object sender, RoutedEventArgs e)
+        {
+            if (CbLeters.IsChecked == false &&
+                CbNumbers.IsChecked == false &&
+                CbSymbols.IsChecked == false)
+            {
+                ((CheckBox)sender).IsChecked = true;
+            }
+        }
+
+
     }
 }
