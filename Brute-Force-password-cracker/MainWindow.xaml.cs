@@ -44,97 +44,106 @@ namespace Brute_Force_password_cracker
 
         private void ReadEncryptedFile_Click(object sender, RoutedEventArgs e)
         {
-            int minPassLen = 0;
-            int maxPassLen = 0;
+            //int minPassLen = 0;
+            //int maxPassLen = 0;
 
-            bool lettersPass = CbLeters.IsChecked == true;
-            bool numbersPass = CbNumbers.IsChecked == true;
-            bool symbolsPass = CbSymbols.IsChecked == true;
+            //bool lettersPass = CbLeters.IsChecked == true;
+            //bool numbersPass = CbNumbers.IsChecked == true;
+            //bool symbolsPass = CbSymbols.IsChecked == true;
 
-            int.TryParse(InputMin.Text, out minPassLen);
-            int.TryParse(InputMax.Text, out maxPassLen);
+            //int.TryParse(InputMin.Text, out minPassLen);
+            //int.TryParse(InputMax.Text, out maxPassLen);
 
-            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            //string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            string dictionaryNumbers = "0123456789";
+            //string dictionaryNumbers = "0123456789";
 
-            string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
+            //string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
 
-            string currentCharacterBase = "";
+            //string currentCharacterBase = "";
 
-            if (lettersPass)
-            {
-                currentCharacterBase += dictionaryLetters;
+            //if (lettersPass)
+            //{
+            //    currentCharacterBase += dictionaryLetters;
+            //}
+
+            //if (numbersPass)
+            //{
+            //    currentCharacterBase += dictionaryNumbers;
+            //}
+
+            //if (symbolsPass)
+            //{
+            //    currentCharacterBase += dictionarySigns;
+            //}
+
+            ////currentCharacterBase  - słownik z którego finalnie tworzymy słowa do testowania
+
+            //MessageBox.Show($"{currentCharacterBase}");
+
+
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            //string zipPath = tbInfo.Text;
+            //string password = pwdZip.Password;
+
+            //if (!File.Exists(zipPath))
+            //{
+            //    MessageBox.Show("Choose correct ZIP file.");
+            //    return;
+            //}
+
+            //try
+            //{
+            //    using (ZipFile zip = ZipFile.Read(zipPath))
+            //    {
+
+
+            //        zip.Password = password;
+
+
+            //        ZipEntry entry = zip.FirstOrDefault(e => e.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase));
+
+            //        if (entry == null)
+            //        {
+            //            MessageBox.Show("File .txt not found");
+            //            return;
+            //        }
+
+            //        using (MemoryStream ms = new MemoryStream())
+            //        {
+            //            entry.Extract(ms);
+            //            ms.Position = 0;
+
+            //            string content;
+            //            using (StreamReader sr = new StreamReader(ms))
+            //            {
+            //                content = sr.ReadToEnd();
+            //            }
+
+            //            MessageBox.Show(
+            //                $"File found: {entry.FileName}\n\nContent of file:\n{content}"
+            //            );
+            //        }
+            //    }
+            //}
+            //catch (BadPasswordException)
+            //{
+            //    MessageBox.Show("Error bad password");
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error: " + ex.Message);
+            //}
+
+            if (pwdZip.Password != null && pwdZip.Password != "") {
+                if (VerifyPassword(pwdZip.Password, tbInfo.Text))
+                    MessageBox.Show($"Znalezione hasło to {pwdZip.Password}");
+                else
+                    MessageBox.Show($"Hasło nieprawidłowe");
             }
-
-            if (numbersPass)
-            {
-                currentCharacterBase += dictionaryNumbers;
-            }
-
-            if (symbolsPass)
-            {
-                currentCharacterBase += dictionarySigns;
-            }
-
-            //currentCharacterBase  - słownik z którego finalnie tworzymy słowa do testowania
-
-            MessageBox.Show($"{currentCharacterBase}");
-
-
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            string zipPath = tbInfo.Text;
-            string password = pwdZip.Password;
-
-            if (!File.Exists(zipPath))
-            {
-                MessageBox.Show("Choose correct ZIP file.");
-                return;
-            }
-
-            try
-            {
-                using (ZipFile zip = ZipFile.Read(zipPath))
-                {
-
-
-                    zip.Password = password;
-
-
-                    ZipEntry entry = zip.FirstOrDefault(e => e.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase));
-
-                    if (entry == null)
-                    {
-                        MessageBox.Show("File .txt not found");
-                        return;
-                    }
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        entry.Extract(ms);
-                        ms.Position = 0;
-
-                        string content;
-                        using (StreamReader sr = new StreamReader(ms))
-                        {
-                            content = sr.ReadToEnd();
-                        }
-
-                        MessageBox.Show(
-                            $"File found: {entry.FileName}\n\nContent of file:\n{content}"
-                        );
-                    }
-                }
-            }
-            catch (BadPasswordException)
-            {
-                MessageBox.Show("Error bad password");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            else
+                BruteForce();
         }
 
         private void DictionaryAttack_Click(object sender, RoutedEventArgs e)
@@ -230,5 +239,84 @@ namespace Brute_Force_password_cracker
         }
 
 
+        private void BruteForce()
+        {
+            int minPassLen, maxPassLen = 0;
+
+            bool lettersPass = CbLeters.IsChecked == true;
+            bool numbersPass = CbNumbers.IsChecked == true;
+            bool symbolsPass = CbSymbols.IsChecked == true;
+
+            int.TryParse(InputMin.Text, out minPassLen);
+            int.TryParse(InputMax.Text, out maxPassLen);
+
+            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            string dictionaryNumbers = "0123456789";
+
+            string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
+
+            string currentCharacterBase = "";
+
+            if (lettersPass)
+            {
+                currentCharacterBase += dictionaryLetters;
+            }
+
+            if (numbersPass)
+            {
+                currentCharacterBase += dictionaryNumbers;
+            }
+
+            if (symbolsPass)
+            {
+                currentCharacterBase += dictionarySigns;
+            }
+
+            char[] charSet = currentCharacterBase.ToCharArray();
+            bool passwordFound = false;
+            string zipPath = tbInfo.Text;
+
+            for (int length = minPassLen; length <= maxPassLen; length++)
+            {
+                char[] password = new char[length];
+
+                if (BruteForceAttack(charSet, password, 0, zipPath))
+                {
+                    passwordFound = true;
+                    break;
+                }
+            }
+
+            if (!passwordFound)
+                MessageBox.Show("Hasła nie znaleziono w podanym zakresie");
+        }
+
+        private bool BruteForceAttack(char[] charSet, char[] password, int index, string zipPath)
+        {
+            if (index == password.Length)
+            {
+                string passwordToTest = new string(password);
+
+                if(VerifyPassword(passwordToTest, zipPath))
+                {
+                    MessageBox.Show($"Złamane hasło to: {passwordToTest}");
+                    return true;
+                }
+                
+                return false;
+            }
+
+            
+            for(int i = 0; i < charSet.Length; i++)
+            {
+                password[index] = charSet[i];
+
+                if(BruteForceAttack(charSet, password, index + 1, zipPath))
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
