@@ -241,7 +241,8 @@ namespace Brute_Force_password_cracker
 
         private void BruteForce()
         {
-            int minPassLen, maxPassLen = 0;
+            EncryptedFileDictionaryPassword();
+            int minPassLen = 0, maxPassLen = 0;
 
             bool lettersPass = CbLeters.IsChecked == true;
             bool numbersPass = CbNumbers.IsChecked == true;
@@ -249,42 +250,52 @@ namespace Brute_Force_password_cracker
 
             int.TryParse(InputMin.Text, out minPassLen);
             int.TryParse(InputMax.Text, out maxPassLen);
+            if (minPassLen > maxPassLen)
+            {
+                MessageBox.Show("Minimalna długość hasła nie może byc wieksza od maksymalnej");
+                return;
+            }
 
             string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
             string dictionaryNumbers = "0123456789";
-
             string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
 
             string currentCharacterBase = "";
 
-            if (lettersPass)
-            {
-                currentCharacterBase += dictionaryLetters;
-            }
-
-            if (numbersPass)
-            {
-                currentCharacterBase += dictionaryNumbers;
-            }
-
-            if (symbolsPass)
-            {
-                currentCharacterBase += dictionarySigns;
-            }
+            if (lettersPass) currentCharacterBase += dictionaryLetters;
+            if (numbersPass) currentCharacterBase += dictionaryNumbers;
+            if (symbolsPass) currentCharacterBase += dictionarySigns;
 
             char[] charSet = currentCharacterBase.ToCharArray();
-            bool passwordFound = false;
             string zipPath = tbInfo.Text;
+
+            bool passwordFound = false;
 
             for (int length = minPassLen; length <= maxPassLen; length++)
             {
-                char[] password = new char[length];
+                long total = 1;
+                for (int k = 0; k < length; k++)
+                    total *= charSet.Length;
 
-                if (BruteForceAttack(charSet, password, 0, zipPath))
+                for (long i = 0; i < total; i++)
                 {
-                    passwordFound = true;
-                    break;
+                    char[] password = new char[length];
+                    long t = i;
+
+                    for (int pos = length - 1; pos >= 0; pos--)
+                    {
+                        password[pos] = charSet[t % charSet.Length];
+                        t /= charSet.Length;
+                    }
+
+                    string passwordToTest = new string(password);
+
+                    if (VerifyPassword(passwordToTest, zipPath))
+                    {
+                        MessageBox.Show($"Złamane hasło to: {passwordToTest}");
+                        passwordFound = true;
+                        return; 
+                    }
                 }
             }
 
@@ -292,31 +303,9 @@ namespace Brute_Force_password_cracker
                 MessageBox.Show("Hasła nie znaleziono w podanym zakresie");
         }
 
-        private bool BruteForceAttack(char[] charSet, char[] password, int index, string zipPath)
+        private bool IsMatch(string candidateText, string zipPath)
         {
-            if (index == password.Length)
-            {
-                string passwordToTest = new string(password);
-
-                if(VerifyPassword(passwordToTest, zipPath))
-                {
-                    MessageBox.Show($"Złamane hasło to: {passwordToTest}");
-                    return true;
-                }
-                
-                return false;
-            }
-
-            
-            for(int i = 0; i < charSet.Length; i++)
-            {
-                password[index] = charSet[i];
-
-                if(BruteForceAttack(charSet, password, index + 1, zipPath))
-                    return true;
-            }
-
-            return false;
+            return VerifyPassword(candidateText, zipPath);
         }
     }
 }
