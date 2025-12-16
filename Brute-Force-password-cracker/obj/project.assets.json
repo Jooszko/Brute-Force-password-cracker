@@ -33,23 +33,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dominik\\.nuget\\packages\\": {},
+    "C:\\Users\\arkad\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "projectUniqueName": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "projectName": "Brute-Force-password-cracker",
-      "projectPath": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
-      "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
+      "projectPath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "packagesPath": "C:\\Users\\arkad\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arkad\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -58,7 +58,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -76,7 +75,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -106,7 +106,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
@@ -115,7 +115,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'DotNetZip.Reduced 1.9.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "Pakiet „DotNetZip.Reduced 1.9.1.8” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net8.0-windows7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
       "libraryId": "DotNetZip.Reduced",
       "targetGraphs": [
         "net8.0-windows7.0"

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Brute_Force_password_cracker"
         mc:Ignorable="d"
-        Title="Password Cracker" Height="450" Width="700"
+        Title="Password Cracker" Height="460" Width="700"
         Background="#0D0D0D"
         FontFamily="Consolas"
         >
@@ -57,7 +57,8 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" BorderThickness="1" Margin="0,0,0,10" Padding="5">
-            <TextBlock Text="Brute Force password cracker" 
+            <TextBlock x:Name="tbxTitle"
+                       Text="Brute Force password cracker" 
                        HorizontalAlignment="Center" 
                        FontSize="20" 
                        FontWeight="Bold"/>
@@ -95,7 +96,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="InputMin" PreviewTextInput="NumberValidationTextBox" Width="30" Height="30" TextAlignment="Center" VerticalContentAlignment="Center" Text="5"/>
+                        <TextBox x:Name="InputMin" PreviewTextInput="NumberValidationTextBox" Width="30" Height="30" TextAlignment="Center" VerticalContentAlignment="Center" Text="3"/>
                         <TextBox x:Name="InputMax" PreviewTextInput="NumberValidationTextBox" Width="30" Height="30" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center" Text="20" Margin="10 0 0 0"/>
                         <TextBlock Grid.Column="2" Text="Długość hasła OD / DO" VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </Grid>
@@ -106,23 +107,22 @@
                         
                      <!--testowo dodane tylko do obsługi waszych testów-->
                     <PasswordBox  x:Name="pwdZip" Margin="0 10"/>
-                    
+                    <CheckBox x:Name="CbIteratively" Unchecked="ValidateCheckBox" Content="Sprawdzanie iteracyjne" Margin="0,5,0,0"/>
+                    <CheckBox x:Name="CbRecursively" Unchecked="ValidateCheckBox" Content="Sprawdzanie rekurencyjne" Margin="0,5,0,0"/>
+
+
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="1" BorderThickness="2" Margin="5,0,0,0">
                 <ListBox x:Name="ResultsList" BorderThickness="0" Margin="5" FontFamily="Consolas">
-                    <ListBoxItem>> pass1</ListBoxItem>
-                    <ListBoxItem>> pass2</ListBoxItem>
-                    <ListBoxItem>> pass3</ListBoxItem>
-                    <ListBoxItem>> pass4</ListBoxItem>
-                    <ListBoxItem Foreground="Red">> Correctpass</ListBoxItem>
-                    <ListBoxItem>> continuing...</ListBoxItem>
+                    
                 </ListBox>
             </Border>
         </Grid>
 
         <Button Grid.Row="2" Content="EXECUTE" 
+                x:Name="btnExecute"
                 Height="50" 
                 Click="ReadEncryptedFile_Click"
                 Margin="0,15,0,0" 

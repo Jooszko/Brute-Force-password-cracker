@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Brute_Force_password_cracker
 {
@@ -44,106 +46,22 @@ namespace Brute_Force_password_cracker
 
         private void ReadEncryptedFile_Click(object sender, RoutedEventArgs e)
         {
-            //int minPassLen = 0;
-            //int maxPassLen = 0;
-
-            //bool lettersPass = CbLeters.IsChecked == true;
-            //bool numbersPass = CbNumbers.IsChecked == true;
-            //bool symbolsPass = CbSymbols.IsChecked == true;
-
-            //int.TryParse(InputMin.Text, out minPassLen);
-            //int.TryParse(InputMax.Text, out maxPassLen);
-
-            //string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-            //string dictionaryNumbers = "0123456789";
-
-            //string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
-
-            //string currentCharacterBase = "";
-
-            //if (lettersPass)
-            //{
-            //    currentCharacterBase += dictionaryLetters;
-            //}
-
-            //if (numbersPass)
-            //{
-            //    currentCharacterBase += dictionaryNumbers;
-            //}
-
-            //if (symbolsPass)
-            //{
-            //    currentCharacterBase += dictionarySigns;
-            //}
-
-            ////currentCharacterBase  - słownik z którego finalnie tworzymy słowa do testowania
-
-            //MessageBox.Show($"{currentCharacterBase}");
-
-
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            //string zipPath = tbInfo.Text;
-            //string password = pwdZip.Password;
-
-            //if (!File.Exists(zipPath))
-            //{
-            //    MessageBox.Show("Choose correct ZIP file.");
-            //    return;
-            //}
-
-            //try
-            //{
-            //    using (ZipFile zip = ZipFile.Read(zipPath))
-            //    {
-
-
-            //        zip.Password = password;
-
-
-            //        ZipEntry entry = zip.FirstOrDefault(e => e.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase));
-
-            //        if (entry == null)
-            //        {
-            //            MessageBox.Show("File .txt not found");
-            //            return;
-            //        }
-
-            //        using (MemoryStream ms = new MemoryStream())
-            //        {
-            //            entry.Extract(ms);
-            //            ms.Position = 0;
-
-            //            string content;
-            //            using (StreamReader sr = new StreamReader(ms))
-            //            {
-            //                content = sr.ReadToEnd();
-            //            }
-
-            //            MessageBox.Show(
-            //                $"File found: {entry.FileName}\n\nContent of file:\n{content}"
-            //            );
-            //        }
-            //    }
-            //}
-            //catch (BadPasswordException)
-            //{
-            //    MessageBox.Show("Error bad password");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error: " + ex.Message);
-            //}
+            tbxTitle.Text = "Searching password... Please wait.";
+            btnExecute.IsEnabled = false;
 
             if (pwdZip.Password != null && pwdZip.Password != "") {
                 if (VerifyPassword(pwdZip.Password, tbInfo.Text))
                     MessageBox.Show($"Znalezione hasło to {pwdZip.Password}");
                 else
                     MessageBox.Show($"Hasło nieprawidłowe");
+
+                tbxTitle.Text = "Brute Force password cracker";
+                btnExecute.IsEnabled = true;
             }
             else
+            {
                 BruteForce();
+            }
         }
 
         private void DictionaryAttack_Click(object sender, RoutedEventArgs e)
@@ -241,7 +159,7 @@ namespace Brute_Force_password_cracker
 
         private void BruteForce()
         {
-            EncryptedFileDictionaryPassword();
+            //EncryptedFileDictionaryPassword();
             int minPassLen = 0, maxPassLen = 0;
 
             bool lettersPass = CbLeters.IsChecked == true;
@@ -268,8 +186,80 @@ namespace Brute_Force_password_cracker
 
             char[] charSet = currentCharacterBase.ToCharArray();
             string zipPath = tbInfo.Text;
-
             bool passwordFound = false;
+
+
+            if(CbIteratively.IsChecked == true)
+            {
+                new Thread(() =>
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+
+                    BruteForceIteratively(charSet, minPassLen, maxPassLen, zipPath);
+
+                    sw.Stop();
+                    string time = sw.Elapsed.ToString(@"mm\:ss\.ff");
+                    MessageBox.Show($"Czas trwania ataku: {time}");
+
+                    ResultsList.Dispatcher.Invoke(() =>
+                    {
+                        tbxTitle.Text = "Brute Force password cracker";
+                        btnExecute.IsEnabled = true;
+                    });
+
+                }).Start();
+            }
+            else if (CbRecursively.IsChecked == true)
+            {
+                new Thread(() =>
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+
+                    for (int length = minPassLen; length <= maxPassLen; length++)
+                    {
+                        char[] password = new char[length];
+                        if (BruteForceAttack(charSet, password, 0, zipPath))
+                        {
+                            passwordFound = true;
+                            break;
+                        }
+                    }
+
+                    sw.Stop();
+                    string time = sw.Elapsed.ToString(@"mm\:ss\.ff");
+                    MessageBox.Show($"Czas trwania ataku: {time}");
+
+                    ResultsList.Dispatcher.Invoke(() =>
+                    {
+                        tbxTitle.Text = "Brute Force password cracker";
+                        btnExecute.IsEnabled = true;
+                    });
+
+                    if (!passwordFound)
+                        MessageBox.Show("Hasła nie znaleziono w podanym zakresie");
+                }).Start();
+            }
+            else
+            {
+                ResultsList.Dispatcher.Invoke(() =>
+                {
+                    tbxTitle.Text = "Brute Force password cracker";
+                    btnExecute.IsEnabled = true;
+                });
+                MessageBox.Show("Wybierz metodę łamania hasła: rekurencyjnie lub iteracyjnie.");
+            }
+            
+        }
+
+        private bool IsMatch(string candidateText, string zipPath)
+        {
+            return VerifyPassword(candidateText, zipPath);
+        }
+
+        private bool BruteForceIteratively(char[]charSet, int minPassLen, int maxPassLen, string zipPath)
+        {
 
             for (int length = minPassLen; length <= maxPassLen; length++)
             {
@@ -289,23 +279,65 @@ namespace Brute_Force_password_cracker
                     }
 
                     string passwordToTest = new string(password);
+                    ResultsList.Dispatcher.Invoke(() => AddLog(new string(password)));
 
                     if (VerifyPassword(passwordToTest, zipPath))
                     {
                         MessageBox.Show($"Złamane hasło to: {passwordToTest}");
-                        passwordFound = true;
-                        return; 
+                        return true;
                     }
                 }
+                              
             }
-
-            if (!passwordFound)
-                MessageBox.Show("Hasła nie znaleziono w podanym zakresie");
+            return false;
         }
 
-        private bool IsMatch(string candidateText, string zipPath)
+        private bool BruteForceAttack(char[] charSet, char[] password, int index, string zipPath) //recursive
         {
-            return VerifyPassword(candidateText, zipPath);
+            if (index == password.Length)
+            {
+                string candidate = new string(password);
+                if (IsMatch(candidate, zipPath))
+                {
+                    MessageBox.Show($"Password found: {candidate}");
+                    return true;
+                }
+                return false;
+            }
+            foreach (char c in charSet)
+            {
+                password[index] = c;
+                ResultsList.Dispatcher.Invoke(() => AddLog(new string(password)));
+
+
+                if (BruteForceAttack(charSet, password, index + 1, zipPath))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddLog(string text) //displaying checked passwords
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                string entry = $"{DateTime.Now:HH:mm:ss}: {text}";
+                ResultsList.Items.Add(entry);
+
+                if (ResultsList.Items.Count > 0)
+                {
+                    var lastItem = ResultsList.Items[ResultsList.Items.Count - 1];
+                    ResultsList.ScrollIntoView(lastItem);
+                }
+            });
+
+            if (ResultsList.Items.Count > 1000)
+            {
+                ResultsList.Items.RemoveAt(0);
+    
+            }
+            ResultsList.ScrollIntoView(ResultsList.Items[ResultsList.Items.Count - 1]);
         }
     }
 }
