@@ -1,18 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\",
+  "WorkspaceRootPath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\dominik\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\desktop\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|solutionrelative:brute-force-password-cracker\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\dominik\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\password-wordlist.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|solutionrelative:brute-force-password-cracker\\password-wordlist.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\desktop\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|solutionrelative:brute-force-password-cracker\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\dominik\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|solutionrelative:brute-force-password-cracker\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|c:\\users\\desktop\\source\\repos\\brute-force\\brute-force-password-cracker\\brute-force-password-cracker\\password-wordlist.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9806DE6E-6CBE-4316-8B19-60C343C267C6}|Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj|solutionrelative:brute-force-password-cracker\\password-wordlist.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,15 +26,15 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
             {
               "$type": "Bookmark",
@@ -51,37 +51,36 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "password-wordlist.txt",
-              "DocumentMoniker": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\password-wordlist.txt",
-              "RelativeDocumentMoniker": "Brute-Force-password-cracker\\password-wordlist.txt",
-              "ToolTip": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\password-wordlist.txt",
-              "RelativeToolTip": "Brute-Force-password-cracker\\password-wordlist.txt",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-14T12:03:31.708Z",
-              "EditorCaption": ""
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "Brute-Force-password-cracker\\AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\AssemblyInfo.cs",
+              "RelativeToolTip": "Brute-Force-password-cracker\\AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T22:04:44.162Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Brute-Force-password-cracker\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml",
-              "RelativeToolTip": "Brute-Force-password-cracker\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-12-13T22:05:57.323Z",
-              "EditorCaption": ""
+              "Title": "password-wordlist.txt",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\password-wordlist.txt",
+              "RelativeDocumentMoniker": "Brute-Force-password-cracker\\password-wordlist.txt",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\password-wordlist.txt",
+              "RelativeToolTip": "Brute-Force-password-cracker\\password-wordlist.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-12-14T12:03:31.708Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "Brute-Force-password-cracker\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Dominik\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\MainWindow.xaml.cs",
               "RelativeToolTip": "Brute-Force-password-cracker\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAPcAAAAAAAAAAAAiwAABAAANAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIIBAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-13T22:05:57.399Z",
               "EditorCaption": ""

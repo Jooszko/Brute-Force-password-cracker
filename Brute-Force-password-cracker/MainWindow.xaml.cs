@@ -48,7 +48,6 @@ namespace Brute_Force_password_cracker
         {
             tbxTitle.Text = "Searching password... Please wait.";
             btnExecute.IsEnabled = false;
-
             if (pwdZip.Password != null && pwdZip.Password != "") {
                 if (VerifyPassword(pwdZip.Password, tbInfo.Text))
                     MessageBox.Show($"Znalezione hasło to {pwdZip.Password}");
@@ -165,6 +164,7 @@ namespace Brute_Force_password_cracker
             bool lettersPass = CbLeters.IsChecked == true;
             bool numbersPass = CbNumbers.IsChecked == true;
             bool symbolsPass = CbSymbols.IsChecked == true;
+            bool capitalPass = CbCapital.IsChecked == true;
 
             int.TryParse(InputMin.Text, out minPassLen);
             int.TryParse(InputMax.Text, out maxPassLen);
@@ -174,7 +174,8 @@ namespace Brute_Force_password_cracker
                 return;
             }
 
-            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyz";
+            string dictionaryCapital = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string dictionaryNumbers = "0123456789";
             string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
 
@@ -183,6 +184,7 @@ namespace Brute_Force_password_cracker
             if (lettersPass) currentCharacterBase += dictionaryLetters;
             if (numbersPass) currentCharacterBase += dictionaryNumbers;
             if (symbolsPass) currentCharacterBase += dictionarySigns;
+            if (capitalPass) currentCharacterBase += dictionaryCapital;
 
             char[] charSet = currentCharacterBase.ToCharArray();
             string zipPath = tbInfo.Text;
@@ -191,12 +193,13 @@ namespace Brute_Force_password_cracker
 
             if(CbIteratively.IsChecked == true)
             {
+                var rule = txtZip.Text;
                 new Thread(() =>
                 {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-
-                    BruteForceIteratively(charSet, minPassLen, maxPassLen, zipPath);
+                    
+                    BruteForceIteratively(minPassLen, maxPassLen, capitalPass, lettersPass, numbersPass, symbolsPass, rule, zipPath, dictionaryLetters, dictionaryNumbers, dictionarySigns, dictionaryCapital);
 
                     sw.Stop();
                     string time = sw.Elapsed.ToString(@"mm\:ss\.ff");
@@ -258,26 +261,141 @@ namespace Brute_Force_password_cracker
             return VerifyPassword(candidateText, zipPath);
         }
 
-        private bool BruteForceIteratively(char[]charSet, int minPassLen, int maxPassLen, string zipPath)
+        static string[] SplitTokens(string input)
+                => input.Split('|', StringSplitOptions.RemoveEmptyEntries);
+
+
+        static char[] AllowedForToken(string token, string dictionaryLetters, string dictionaryCapital, string dictionaryNumbers, string dictionarySigns)
+        {
+            switch (token)
+            {
+                case "*":
+                    return dictionaryLetters.ToCharArray();
+
+                case "&":
+                    return dictionaryCapital.ToCharArray();
+
+                case "!":
+                    return dictionaryNumbers.ToCharArray();
+
+                case "#":
+                    return dictionarySigns.ToCharArray();
+
+                case "*&":
+                    return (dictionaryLetters + dictionaryCapital).ToCharArray();
+
+                case "*!":
+                    return (dictionaryLetters + dictionaryNumbers).ToCharArray();
+
+                case "*#":
+                    return (dictionaryLetters + dictionarySigns).ToCharArray();
+
+                case "&!":
+                    return (dictionaryCapital + dictionaryNumbers).ToCharArray();
+
+                case "&#":
+                    return (dictionaryCapital + dictionarySigns).ToCharArray();
+
+                case "!#":
+                    return (dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "*&!":
+                    return (dictionaryLetters + dictionaryCapital + dictionaryNumbers).ToCharArray();
+
+                case "*&#":
+                    return (dictionaryLetters + dictionaryCapital + dictionarySigns).ToCharArray();
+
+                case "*!#":
+                    return (dictionaryLetters + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "&!#":
+                    return (dictionaryCapital + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "*&!#":
+                    return (dictionaryLetters + dictionaryCapital + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                default:
+                    throw new ArgumentException($"Nieznany token reguły: '{token}'");
+            }
+        }
+
+        // ===== POJEDYNCZE =====
+        // *     -> małe litery
+        // &     -> duże litery
+        // !     -> liczby
+        // #     -> znaki specjalne
+
+        // ===== PARY =====
+        // *&    -> małe + duże litery
+        // *!    -> małe litery + liczby
+        // *#    -> małe litery + znaki specjalne
+        // &!    -> duże litery + liczby
+        // &#    -> duże litery + znaki specjalne
+        // !#    -> liczby + znaki specjalne
+
+        // ===== TRÓJKI =====
+        // *&!   -> małe + duże + liczby
+        // *&#   -> małe + duże + znaki specjalne
+        // *!#   -> małe + liczby + znaki specjalne
+        // &!#   -> duże + liczby + znaki specjalne
+
+        // ===== WSZYSTKIE =====
+        // *&!#  -> małe + duże + liczby + znaki specjalne
+        private bool BruteForceIteratively(int min, int max, bool withCapital, bool withLetters, bool withNumbers, bool withSigns, string rule, string zipPath, string dictionaryLetters, string dictionaryCapital, string dictionaryNumbers, string dictionarySigns)
         {
 
-            for (int length = minPassLen; length <= maxPassLen; length++)
-            {
-                long total = 1;
-                for (int k = 0; k < length; k++)
-                    total *= charSet.Length;
+            var baseTokens = SplitTokens(rule);
+            
 
-                for (long i = 0; i < total; i++)
+            string defalutToken = "";
+            if (withCapital) defalutToken += dictionaryCapital;
+            if (withLetters) defalutToken += dictionaryLetters;
+            if (withNumbers) defalutToken += dictionaryNumbers;
+            if (withSigns) defalutToken += dictionarySigns;
+
+            if (defalutToken.Length == 0)
+                throw new ArgumentException("Nie wybrano żadnego zestawu znaków.");
+
+            for (int length = min; length <= max; length++)
+            {
+                var tokens = baseTokens.Take(length).ToArray();
+                char[][] allowed = new char[length][];
+                for (int pos = 0; pos < length; pos++)
                 {
+                    if (pos >= tokens.Length)
+                    {
+                        allowed[pos] = defalutToken.ToCharArray();
+                        continue;
+                    }
+                    string tok = tokens[pos];
+                    bool isLiteral = tok.Length == 1 && tok[0] != '*' && tok[0] != '&' && tok[0] != '!' && tok[0] != '#';
+
+                    if (isLiteral) allowed[pos] = new[] { tok[0] };
+                    else
+                    {
+                        allowed[pos] = AllowedForToken(tok, dictionaryLetters, dictionaryCapital, dictionaryNumbers, dictionarySigns);
+
+                        if (allowed[pos].Length == 0)
+                            throw new ArgumentException($"Token '{tok}' na pozycji {pos} zwrócił pusty zbiór znaków.");
+                    }
+                }
+
+                long total = 1;
+                for (int pos = 0; pos < length; pos++)
+                {
+                    total *= allowed[pos].Length;
+                }
+                for (long j = 0; j < total; j++)
+                {
+                    long t = j;
                     char[] password = new char[length];
-                    long t = i;
 
                     for (int pos = length - 1; pos >= 0; pos--)
                     {
-                        password[pos] = charSet[t % charSet.Length];
-                        t /= charSet.Length;
+                        var set = allowed[pos];
+                        password[pos] = set[t % set.Length];
+                        t /= set.Length;
                     }
-
                     string passwordToTest = new string(password);
                     ResultsList.Dispatcher.Invoke(() => AddLog(new string(password)));
 
@@ -287,7 +405,6 @@ namespace Brute_Force_password_cracker
                         return true;
                     }
                 }
-                              
             }
             return false;
         }
