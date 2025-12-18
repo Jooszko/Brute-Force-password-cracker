@@ -215,6 +215,7 @@ namespace Brute_Force_password_cracker
             }
             else if (CbRecursively.IsChecked == true)
             {
+                string txt = txtZip.Text;
                 new Thread(() =>
                 {
                     Stopwatch sw = new Stopwatch();
@@ -223,7 +224,7 @@ namespace Brute_Force_password_cracker
                     for (int length = minPassLen; length <= maxPassLen; length++)
                     {
                         char[] password = new char[length];
-                        if (BruteForceAttack(charSet, password, 0, zipPath))
+                        if (BruteForceAttack(charSet, password, 0, zipPath, txt))
                         {
                             passwordFound = true;
                             break;
@@ -409,7 +410,7 @@ namespace Brute_Force_password_cracker
             return false;
         }
 
-        private bool BruteForceAttack(char[] charSet, char[] password, int index, string zipPath) //recursive
+        private bool BruteForceAttack(char[] charSet, char[] password, int index, string zipPath, string txtZip) //recursive
         {
             if (index == password.Length)
             {
@@ -421,18 +422,96 @@ namespace Brute_Force_password_cracker
                 }
                 return false;
             }
-            foreach (char c in charSet)
+
+            char[] charsForCurrentPosition;
+            if ((txtZip != null || txtZip != "") && index < txtZip.Length) 
+            {
+                var tokens = SplitTokens(txtZip);
+                var tok = tokens[index];
+                if (tok[0] != '*' && tok[0] != '&' && tok[0] != '!' && tok[0] != '#')
+                {
+                    charsForCurrentPosition =  tok.ToCharArray();
+                }
+                else
+                {
+                    charsForCurrentPosition = CreateDictionarySymbol(tok);
+                } 
+            }
+            else
+            {
+                charsForCurrentPosition = charSet;
+            }
+
+            foreach (char c in charsForCurrentPosition)
             {
                 password[index] = c;
                 ResultsList.Dispatcher.Invoke(() => AddLog(new string(password)));
 
-
-                if (BruteForceAttack(charSet, password, index + 1, zipPath))
+                if (BruteForceAttack(charSet, password, index + 1, zipPath, txtZip))
                 {
                     return true;
                 }
             }
+
             return false;
+        }
+
+        private char[] CreateDictionarySymbol(string t)
+        {
+            string dictionaryLetters = "abcdefghijklmnopqrstuvwxyz";
+            string dictionaryCapital = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string dictionaryNumbers = "0123456789";
+            string dictionarySigns = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~\\ ";
+            switch (t)
+            {
+                case "*":
+                    return dictionaryLetters.ToCharArray();
+
+                case "&":
+                    return dictionaryCapital.ToCharArray();
+
+                case "!":
+                    return dictionaryNumbers.ToCharArray();
+
+                case "#":
+                    return dictionarySigns.ToCharArray();
+
+                case "*&":
+                    return (dictionaryLetters + dictionaryCapital).ToCharArray();
+
+                case "*!":
+                    return (dictionaryLetters + dictionaryNumbers).ToCharArray();
+
+                case "*#":
+                    return (dictionaryLetters + dictionarySigns).ToCharArray();
+
+                case "&!":
+                    return (dictionaryCapital + dictionaryNumbers).ToCharArray();
+
+                case "&#":
+                    return (dictionaryCapital + dictionarySigns).ToCharArray();
+
+                case "!#":
+                    return (dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "*&!":
+                    return (dictionaryLetters + dictionaryCapital + dictionaryNumbers).ToCharArray();
+
+                case "*&#":
+                    return (dictionaryLetters + dictionaryCapital + dictionarySigns).ToCharArray();
+
+                case "*!#":
+                    return (dictionaryLetters + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "&!#":
+                    return (dictionaryCapital + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                case "*&!#":
+                    return (dictionaryLetters + dictionaryCapital + dictionaryNumbers + dictionarySigns).ToCharArray();
+
+                default:
+                    throw new ArgumentException($"Nieznany token reguły: '{t}'");
+            }
         }
 
         public void AddLog(string text) //displaying checked passwords
