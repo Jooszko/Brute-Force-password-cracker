@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Brute-Force-password-cracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac21d40375d022653faf72cd8397ceae50d0a14d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a5d76d221d220bd24e2d19576be3de412d6a50f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Brute-Force-password-cracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Brute-Force-password-cracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
