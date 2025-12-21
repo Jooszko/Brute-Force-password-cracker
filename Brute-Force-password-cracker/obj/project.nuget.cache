@@ -1,20 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "bMqeO8zTuSQ=",
+  "dgSpecHash": "q54PmTU7D1x0H+b0DPErSdfBZ4PBkxwsmSa3NdQCXn5lS4cTKSAz8WgEGxU+PlJ1M9n5vtuggRWm4pfS0bfmEg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+  "projectFilePath": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DESKTOP\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512",
-    "C:\\Users\\DESKTOP\\.nuget\\packages\\system.text.encoding.codepages\\10.0.1\\system.text.encoding.codepages.10.0.1.nupkg.sha512"
+    "C:\\Users\\jonas\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512",
+    "C:\\Users\\jonas\\.nuget\\packages\\system.text.encoding.codepages\\10.0.1\\system.text.encoding.codepages.10.0.1.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
-      "message": "Pakiet „DotNetZip.Reduced 1.9.1.8” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net8.0-windows7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
-      "projectPath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "message": "Pakiet „DotNetZip.Reduced 1.9.1.8” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net8.0-windows7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
       "libraryId": "DotNetZip.Reduced",
       "targetGraphs": [
         "net8.0-windows7.0"

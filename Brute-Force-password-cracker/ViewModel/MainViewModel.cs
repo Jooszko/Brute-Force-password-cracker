@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,7 +40,7 @@ namespace Brute_Force_password_cracker.ViewModel
         private string _manualPass;
         public string ManualPass { get => _manualPass; set { _manualPass = value; OnPropertyChanged(nameof(ManualPass)); } }
 
-        private string _ruleText; // txtZip z oryginału
+        private string _ruleText;
         public string RuleText { get => _ruleText; set { _ruleText = value; OnPropertyChanged(nameof(RuleText)); } }
 
         private bool _isExecuting = true;
@@ -49,13 +48,8 @@ namespace Brute_Force_password_cracker.ViewModel
 
         public ObservableCollection<string> Logs { get; } = new ObservableCollection<string>();
 
-
-
         public ICommand FireCommand { get; }
         public ICommand ExecuteCommand { get; }
-
-
-
 
         private readonly string dLetters = "abcdefghijklmnopqrstuvwxyz";
         private readonly string dCapital = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -91,12 +85,34 @@ namespace Brute_Force_password_cracker.ViewModel
                 }
                 else
                 {
+                    EncryptedFileDictionaryPassword();
                     StartBruteForceLogic();
                 }
             });
 
             Title = "Brute Force password cracker";
             IsExecuting = true;
+        }
+
+        private void EncryptedFileDictionaryPassword()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string dictionaryPath = Path.Combine(baseDirectory, "password-wordlist.txt");
+
+            if (!File.Exists(dictionaryPath)) return;
+
+            string[] txt = File.ReadAllLines(dictionaryPath);
+            string zipPath = ZipPath;
+
+            foreach (var entry in txt)
+            {
+                AddLog($"(Słownik) {entry}");
+                if (VerifyPassword(entry, zipPath))
+                {
+                    MessageBox.Show($"Password found: {entry}");
+                    break;
+                }
+            }
         }
 
         private void StartBruteForceLogic()
@@ -113,7 +129,6 @@ namespace Brute_Force_password_cracker.ViewModel
             if (IsCapital) charBase += dCapital;
 
             int workerCount = Math.Max(1, Environment.ProcessorCount - 1);
-
             Stopwatch sw = Stopwatch.StartNew();
 
             if (IsIteratively)
@@ -136,10 +151,9 @@ namespace Brute_Force_password_cracker.ViewModel
             Application.Current.Dispatcher.Invoke(() => MessageBox.Show($"Czas: {sw.Elapsed:mm\\:ss\\.ff}"));
         }
 
-
-
         private bool VerifyPassword(string pass, string path)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             try
             {
                 using (ZipFile zip = ZipFile.Read(path))
@@ -177,23 +191,19 @@ namespace Brute_Force_password_cracker.ViewModel
                         allowed[i] = defalutToken.ToCharArray();
                         continue;
                     }
-
                     string tok = baseTokens[i];
                     bool isLit = tok.Length == 1 && !"*&!#".Contains(tok[0]);
                     allowed[i] = isLit ? new[] { tok[0] } : GetFromToken(tok);
                 }
 
                 long total = allowed.Aggregate(1L, (acc, arr) => acc * arr.Length);
-
                 int found = 0;
-                string? result = null;
-
+                string result = null;
                 Task[] tasks = new Task[workerCount];
 
                 for (int workerId = 0; workerId < workerCount; workerId++)
                 {
                     int id = workerId;
-
                     tasks[id] = Task.Run(() =>
                     {
                         char[] pass = new char[len];
@@ -213,7 +223,6 @@ namespace Brute_Force_password_cracker.ViewModel
                             {
                                 if (Interlocked.Exchange(ref found, 1) == 0)
                                     result = sPass;
-
                                 break;
                             }
                         }
@@ -228,18 +237,16 @@ namespace Brute_Force_password_cracker.ViewModel
                     return true;
                 }
             }
-
             return false;
         }
-
 
         private bool BruteForceRecursive(char[] set, char[] pass, int idx)
         {
             if (idx == pass.Length)
             {
                 string cand = new string(pass);
-                if (VerifyPassword(cand, ZipPath)) { MessageBox.Show("Znaleziono: " + cand); return true; }
-                return false;
+                AddLog(cand);
+                return VerifyPassword(cand, ZipPath);
             }
 
             char[] currentSet = set;
@@ -271,6 +278,4 @@ namespace Brute_Force_password_cracker.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string n) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
-
-
 }
