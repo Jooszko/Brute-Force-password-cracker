@@ -10,6 +10,28 @@
         "runtime": {
           "lib/net20/Ionic.Zip.Reduced.dll": {}
         }
+      },
+      "System.Text.Encoding.CodePages/10.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
       }
     }
   },
@@ -25,27 +47,74 @@
         "dotnetzip.reduced.nuspec",
         "lib/net20/Ionic.Zip.Reduced.dll"
       ]
+    },
+    "System.Text.Encoding.CodePages/10.0.1": {
+      "sha512": "lsaz3vFh4sl7k1UAwZkyDLPFvZRyVPBniqFne98LwUesNkTJta1XXGri25vRho0TxesYBBNHTv06IqpHkzK6Aw==",
+      "type": "package",
+      "path": "system.text.encoding.codepages/10.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Text.Encoding.CodePages.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Text.Encoding.CodePages.targets",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net10.0/System.Text.Encoding.CodePages.dll",
+        "lib/net10.0/System.Text.Encoding.CodePages.xml",
+        "lib/net462/System.Text.Encoding.CodePages.dll",
+        "lib/net462/System.Text.Encoding.CodePages.xml",
+        "lib/net8.0/System.Text.Encoding.CodePages.dll",
+        "lib/net8.0/System.Text.Encoding.CodePages.xml",
+        "lib/net9.0/System.Text.Encoding.CodePages.dll",
+        "lib/net9.0/System.Text.Encoding.CodePages.xml",
+        "lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
+        "lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "runtimes/win/lib/net10.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net10.0/System.Text.Encoding.CodePages.xml",
+        "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.xml",
+        "runtimes/win/lib/net9.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net9.0/System.Text.Encoding.CodePages.xml",
+        "system.text.encoding.codepages.10.0.1.nupkg.sha512",
+        "system.text.encoding.codepages.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "DotNetZip.Reduced >= 1.9.1.8"
+      "DotNetZip.Reduced >= 1.9.1.8",
+      "System.Text.Encoding.CodePages >= 10.0.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jonas\\.nuget\\packages\\": {}
+    "C:\\Users\\DESKTOP\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "projectUniqueName": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "projectName": "Brute-Force-password-cracker",
-      "projectPath": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
-      "packagesPath": "C:\\Users\\jonas\\.nuget\\packages\\",
-      "outputPath": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
+      "projectPath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "packagesPath": "C:\\Users\\DESKTOP\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\jonas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DESKTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -65,7 +134,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -74,6 +149,10 @@
           "DotNetZip.Reduced": {
             "target": "Package",
             "version": "[1.9.1.8, )"
+          },
+          "System.Text.Encoding.CodePages": {
+            "target": "Package",
+            "version": "[10.0.1, )"
           }
         },
         "imports": [
@@ -95,7 +174,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

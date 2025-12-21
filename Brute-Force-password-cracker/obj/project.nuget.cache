@@ -1,17 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "o0aUPuKY5oeeL+NzhFptY+XZnnLEWepb32jOVE04/5htNq7EYkLUYf01XFyd/le0NAfnVVVL7+Ko0IFDiTeNxw==",
+  "dgSpecHash": "bMqeO8zTuSQ=",
   "success": true,
-  "projectFilePath": "D:\\JoszkoStudia\\5sem\\inżynieria\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+  "projectFilePath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jonas\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512"
+    "C:\\Users\\DESKTOP\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512",
+    "C:\\Users\\DESKTOP\\.nuget\\packages\\system.text.encoding.codepages\\10.0.1\\system.text.encoding.codepages.10.0.1.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
-      "warningLevel": 1,
       "message": "Pakiet „DotNetZip.Reduced 1.9.1.8” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net8.0-windows7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
+      "projectPath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\DESKTOP\\source\\repos\\Brute-Force\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "libraryId": "DotNetZip.Reduced",
       "targetGraphs": [
         "net8.0-windows7.0"

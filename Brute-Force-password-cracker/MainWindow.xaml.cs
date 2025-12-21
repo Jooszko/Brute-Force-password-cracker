@@ -23,6 +23,7 @@ namespace Brute_Force_password_cracker
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
     }
 }

@@ -112,11 +112,13 @@ namespace Brute_Force_password_cracker.ViewModel
             if (IsSymbols) charBase += dSigns;
             if (IsCapital) charBase += dCapital;
 
+            int workerCount = Math.Max(1, Environment.ProcessorCount - 1);
+
             Stopwatch sw = Stopwatch.StartNew();
 
             if (IsIteratively)
             {
-                BruteForceIteratively(min, max, charBase);
+                BruteForceIteratively(min, max, charBase, workerCount);
             }
             else if (IsRecursively)
             {
@@ -136,12 +138,8 @@ namespace Brute_Force_password_cracker.ViewModel
 
 
 
-
-
-
         private bool VerifyPassword(string pass, string path)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             try
             {
                 using (ZipFile zip = ZipFile.Read(path))
@@ -165,44 +163,81 @@ namespace Brute_Force_password_cracker.ViewModel
             });
         }
 
-        private bool BruteForceIteratively(int min, int max, string defalutToken)
+        private bool BruteForceIteratively(int min, int max, string defalutToken, int workerCount)
         {
             var baseTokens = (RuleText ?? "").Split('|', StringSplitOptions.RemoveEmptyEntries);
+
             for (int len = min; len <= max; len++)
             {
                 char[][] allowed = new char[len][];
                 for (int i = 0; i < len; i++)
                 {
-                    if (i >= baseTokens.Length) { allowed[i] = defalutToken.ToCharArray(); continue; }
+                    if (i >= baseTokens.Length)
+                    {
+                        allowed[i] = defalutToken.ToCharArray();
+                        continue;
+                    }
+
                     string tok = baseTokens[i];
                     bool isLit = tok.Length == 1 && !"*&!#".Contains(tok[0]);
                     allowed[i] = isLit ? new[] { tok[0] } : GetFromToken(tok);
                 }
 
                 long total = allowed.Aggregate(1L, (acc, arr) => acc * arr.Length);
-                for (long j = 0; j < total; j++)
+
+                int found = 0;
+                string? result = null;
+
+                Task[] tasks = new Task[workerCount];
+
+                for (int workerId = 0; workerId < workerCount; workerId++)
                 {
-                    long t = j;
-                    char[] pass = new char[len];
-                    for (int p = len - 1; p >= 0; p--)
+                    int id = workerId;
+
+                    tasks[id] = Task.Run(() =>
                     {
-                        pass[p] = allowed[p][(int)(t % allowed[p].Length)];
-                        t /= allowed[p].Length;
-                    }
-                    string sPass = new string(pass);
-                    AddLog(sPass);
-                    if (VerifyPassword(sPass, ZipPath)) { MessageBox.Show("Znaleziono: " + sPass); return true; }
+                        char[] pass = new char[len];
+                        for (long j = id; j < total && Volatile.Read(ref found) == 0; j += workerCount)
+                        {
+                            long t = j;
+                            for (int p = len - 1; p >= 0; p--)
+                            {
+                                pass[p] = allowed[p][(int)(t % allowed[p].Length)];
+                                t /= allowed[p].Length;
+                            }
+
+                            string sPass = new string(pass);
+                            AddLog($"[W{id}] {sPass}");
+
+                            if (VerifyPassword(sPass, ZipPath))
+                            {
+                                if (Interlocked.Exchange(ref found, 1) == 0)
+                                    result = sPass;
+
+                                break;
+                            }
+                        }
+                    });
+                }
+
+                Task.WaitAll(tasks);
+
+                if (found == 1)
+                {
+                    MessageBox.Show("Znaleziono: " + result);
+                    return true;
                 }
             }
+
             return false;
         }
+
 
         private bool BruteForceRecursive(char[] set, char[] pass, int idx)
         {
             if (idx == pass.Length)
             {
                 string cand = new string(pass);
-                AddLog(cand);
                 if (VerifyPassword(cand, ZipPath)) { MessageBox.Show("Znaleziono: " + cand); return true; }
                 return false;
             }
