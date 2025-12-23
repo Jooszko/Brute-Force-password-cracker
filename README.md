@@ -106,5 +106,6 @@ Planned improvements for future versions include:
 - **Jonasz Kubaczka** – Jooszko
   
 ## 📷 Screenshots 
-<img width="681" height="455" alt="image" src="https://github.com/user-attachments/assets/081e88dc-22cf-4b17-a81b-65c74034004d" />
+<img width="675" height="454" alt="image" src="https://github.com/user-attachments/assets/b27a51d6-0cff-4484-b68b-29b949593451" />
+
 
