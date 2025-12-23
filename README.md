@@ -104,3 +104,7 @@ Planned improvements for future versions include:
 - **Arkadiusz Hebda** – Rauhvin  
 - **Dominik Mikulski** – Leywin23 
 - **Jonasz Kubaczka** – Jooszko
+  
+## 📷 Screenshots 
+<img width="681" height="455" alt="image" src="https://github.com/user-attachments/assets/081e88dc-22cf-4b17-a81b-65c74034004d" />
+
