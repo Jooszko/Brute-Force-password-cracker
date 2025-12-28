@@ -276,25 +276,50 @@ namespace Brute_Force_password_cracker.ViewModel
             _stopRecursion = false;
             var tokens = (RuleText ?? "").Split('|', StringSplitOptions.RemoveEmptyEntries);
 
+            var parrallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount - 1
+            };
+
             for (int len = min; len <= max; len++)
             {
                 if (_stopRecursion) break;
 
-                char[] firstLevelSet = defaultToken.ToCharArray();
-                if(tokens.Length > 0)
+                char[] level0 = GetCharsForLevel(0, tokens, defaultToken);
+
+                if (len == 1)
                 {
-                    string tok = tokens[0];
-                    firstLevelSet = !"*&!#".Contains(tok[0]) ? tok.ToCharArray() : GetFromToken(tok);
+                    Parallel.ForEach(level0, parrallelOptions, (c, state) =>
+                    {
+                        if (_stopRecursion)
+                            state.Stop();
+
+                        if (VerifyPassword(c.ToString(), ZipPath))
+                        {
+                            _stopRecursion = true;
+                            state.Stop();
+                        }
+                    });
                 }
-                Parallel.ForEach(firstLevelSet, (firstChar, state) =>
+                else
                 {
-                    if (_stopRecursion) state.Stop();
+                    char[] level1 = GetCharsForLevel(1, tokens, defaultToken);
 
-                    char[] threadLocalPass = new char[len];
-                    threadLocalPass[0] = firstChar;
+                    var tasks = from c0 in level0
+                                from c1 in level1
+                                select new { C0 = c0, C1 = c1 };
 
-                    RecursiveWorker(defaultToken.ToCharArray(), threadLocalPass, 1, tokens, state);
-                });
+                    Parallel.ForEach(tasks, parrallelOptions, (pair, state) =>
+                    {
+                        if (_stopRecursion) state.Stop();
+
+                        char[] threadLocalPass = new char[len];
+                        threadLocalPass[0] = pair.C0;
+                        threadLocalPass[1] = pair.C1;
+
+                        RecursiveWorker(defaultToken.ToCharArray(), threadLocalPass, 2, tokens, state);
+                    });
+                }
 
                 if (_stopRecursion) return true;
             }
@@ -314,7 +339,7 @@ namespace Brute_Force_password_cracker.ViewModel
             {
                 string cand = new string(pass);
                 //AddLog(cand);
-
+                
                 if (VerifyPassword(cand, ZipPath))
                 {
                     _stopRecursion = true;
@@ -349,6 +374,16 @@ namespace Brute_Force_password_cracker.ViewModel
             if (t.Contains("!")) res += dNumbers;
             if (t.Contains("#")) res += dSigns;
             return res.ToCharArray();
+        }
+
+        private char[] GetCharsForLevel(int idx, string[] tokens, string defaultToken)
+        {
+            if (idx < tokens.Length)
+            {
+                string tok = tokens[idx];
+                return !"*&!#".Contains(tok[0]) ? tok.ToCharArray() : GetFromToken(tok);
+            }
+            return defaultToken.ToCharArray();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
