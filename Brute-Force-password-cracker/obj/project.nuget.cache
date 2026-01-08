@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q28TEGpqYwc=",
+  "dgSpecHash": "q23TcL4+Bc8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+  "projectFilePath": "E:\\OneDrive\\Desktop\\tymczasowy\\test\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arkad\\.nuget\\packages\\dotnetzip.reduced\\1.9.1.8\\dotnetzip.reduced.1.9.1.8.nupkg.sha512",
     "C:\\Users\\arkad\\.nuget\\packages\\system.text.encoding.codepages\\10.0.1\\system.text.encoding.codepages.10.0.1.nupkg.sha512"

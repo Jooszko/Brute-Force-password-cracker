@@ -1,0 +1,229 @@
+﻿<Window x:Class="Brute_Force_password_cracker.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Brute_Force_password_cracker.Converters"
+        mc:Ignorable="d"
+        Title="Password Cracker" Height="550" Width="800"
+        Background="#0D0D0D"
+        FontFamily="Consolas">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BgBrush" Color="#0D0D0D"/>
+        <SolidColorBrush x:Key="MainBrush" Color="#00FF41"/>
+
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource MainBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MainBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MainBrush}"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="Foreground" Value="{StaticResource MainBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MainBrush}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource MainBrush}"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource MainBrush}"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MainBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource MainBrush}"/>
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="{StaticResource MainBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderThickness="1" Margin="0,0,0,10" Padding="5">
+            <TextBlock Text="{Binding Title}" 
+                       HorizontalAlignment="Center" 
+                       FontSize="20" 
+                       FontWeight="Bold"/>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderThickness="1" Margin="0,0,5,0" Padding="10">
+                <StackPanel>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="[...]" 
+                                Command="{Binding SelectFileCommand}" 
+                                Width="50" Height="30" 
+                                BorderThickness="0"/>
+                        <TextBlock Grid.Column="1" 
+                                   Text="{Binding ZipPath}" 
+                                   VerticalAlignment="Center" 
+                                   Margin="5,0,0,0" 
+                                   Opacity="0.8"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                    <TextBox Text="{Binding ManualPassword, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,15"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             ToolTip="Enter password manually to test"/>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding InputMin, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="40" Height="30" 
+                                 TextAlignment="Center" 
+                                 VerticalContentAlignment="Center"/>
+                        <TextBox Text="{Binding InputMax, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="40" Height="30" 
+                                 Grid.Column="1" 
+                                 TextAlignment="Center" 
+                                 VerticalContentAlignment="Center" 
+                                 Margin="10 0 0 0"/>
+                        <TextBlock Grid.Column="2" 
+                                   Text="Długość hasła OD / DO" 
+                                   VerticalAlignment="Center" 
+                                   Margin="10,0,0,0"/>
+                    </Grid>
+
+                    <CheckBox Content="Litery" 
+                              IsChecked="{Binding IsLeters}" 
+                              Margin="0,5,0,0"/>
+                    <CheckBox Content="Duże litery" 
+                              IsChecked="{Binding IsCapital}" 
+                              Margin="0,5,0,0"/>
+                    <CheckBox Content="Liczby" 
+                              IsChecked="{Binding IsNumbers}" 
+                              Margin="0,5,0,0"/>
+                    <CheckBox Content="Znaki specjalne" 
+                              IsChecked="{Binding IsSymbols}" 
+                              Margin="0,5,0,0"/>
+
+                    <TextBox Text="{Binding RuleText, UpdateSourceTrigger=PropertyChanged}" 
+                             Margin="0 10"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             ToolTip="Pattern examples:&#x0a;• 'b|*|*' - 3 chars: 1st='b', rest any lowercase&#x0a;• '*|!|#' - any lowercase, any number, any symbol&#x0a;• 'a|b|c|1|2|3' - fixed sequence 'abc123'&#x0a;&#x0a;Tokens:&#x0a;• * = lowercase letters (a-z)&#x0a;• &amp; = uppercase letters (A-Z)&#x0a;• ! = numbers (0-9)&#x0a;• # = symbols"/>
+
+                    <CheckBox Content="Sprawdzanie iteracyjne" 
+                              IsChecked="{Binding IsIteratively}" 
+                              Margin="0,5,0,0"/>
+                    <CheckBox Content="Sprawdzanie rekurencyjne" 
+                              IsChecked="{Binding IsRecursively}" 
+                              Margin="0,5,0,0"/>
+                    <CheckBox Content="Sprawdzanie słownikowe" 
+                              IsChecked="{Binding IsDictionary}" 
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" BorderThickness="1" Margin="5,0,0,0">
+                <ListBox ItemsSource="{Binding Logs}" 
+                         BorderThickness="0" 
+                         Margin="5" 
+                         FontFamily="Consolas"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" 
+                    Content="EXECUTE" 
+                    Command="{Binding ExecuteCommand}"
+                    IsEnabled="{Binding IsExecuting}"
+                    Height="50" 
+                    Margin="0,0,5,0" 
+                    FontSize="24"
+                    Background="#002200"
+                    BorderThickness="2">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Background" Value="#002200"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#001100"/>
+                                <Setter Property="Foreground" Value="#888888"/>
+                                <Setter Property="BorderBrush" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#004400"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Column="1" 
+                    Content="STOP" 
+                    Command="{Binding CancelCommand}"
+                    IsEnabled="{Binding IsExecuting, Converter={StaticResource InverseBooleanConverter}}"
+                    Height="50" 
+                    Margin="5,0,0,0" 
+                    FontSize="24"
+                    Background="#220000"
+                    BorderThickness="2">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Background" Value="#220000"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#110000"/>
+                                <Setter Property="Foreground" Value="#888888"/>
+                                <Setter Property="BorderBrush" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#440000"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

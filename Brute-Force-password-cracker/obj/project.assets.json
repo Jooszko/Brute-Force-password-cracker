@@ -97,24 +97,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arkad\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\arkad\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "projectUniqueName": "E:\\OneDrive\\Desktop\\tymczasowy\\test\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "projectName": "Brute-Force-password-cracker",
-      "projectPath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
+      "projectPath": "E:\\OneDrive\\Desktop\\tymczasowy\\test\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\Brute-Force-password-cracker.csproj",
       "packagesPath": "C:\\Users\\arkad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arkad\\Desktop\\Studia\\MS\\3 rok\\Inżynieria oprogramowania\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
+      "outputPath": "E:\\OneDrive\\Desktop\\tymczasowy\\test\\Brute-Force-password-cracker\\Brute-Force-password-cracker\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\arkad\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -139,8 +134,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.200"
+      }
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -174,7 +168,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

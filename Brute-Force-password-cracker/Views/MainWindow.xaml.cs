@@ -13,9 +13,10 @@ using System.Windows.Navigation;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
-using Brute_Force_password_cracker.ViewModel;
+using Brute_Force_password_cracker.ViewModels;
+using System.Globalization;
 
-namespace Brute_Force_password_cracker
+namespace Brute_Force_password_cracker.Views
 {
     public partial class MainWindow : Window
     {
@@ -23,7 +24,7 @@ namespace Brute_Force_password_cracker
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
     }
 }
