@@ -157,15 +157,19 @@ namespace Brute_Force_password_cracker.ViewModels
 
         public ObservableCollection<string> Logs { get; } = new ObservableCollection<string>();
 
-        public MainViewModel()
+        public MainViewModel(PasswordCrackerService passwordCracker, DictionaryAttackService dictionaryService, FileDialogService fileDialogService)
         {
-            _passwordCracker = new PasswordCrackerService();
-            _dictionaryService = new DictionaryAttackService();
-            _fileDialogService = new FileDialogService();
+            _passwordCracker = passwordCracker;
+            _dictionaryService = dictionaryService;
+            _fileDialogService = fileDialogService;
 
             SelectFileCommand = new RelayCommand(SelectFile, _ => IsExecuting);
-            ExecuteCommand = new RelayCommand(ExecuteCracking, _ => IsExecuting && !string.IsNullOrEmpty(ZipPath) && File.Exists(ZipPath));
+            ExecuteCommand = new RelayCommand(async p => await ExecuteCracking(p), _ => IsExecuting && !string.IsNullOrEmpty(ZipPath) && File.Exists(ZipPath));
             CancelCommand = new RelayCommand(CancelCracking, _ => !IsExecuting);
+        }
+
+        public MainViewModel() : this(new PasswordCrackerService(), new DictionaryAttackService(), new FileDialogService())
+        {
         }
 
         private void SelectFile(object parameter)
@@ -178,7 +182,7 @@ namespace Brute_Force_password_cracker.ViewModels
             }
         }
 
-        private async void ExecuteCracking(object parameter)
+        public async Task ExecuteCracking(object parameter)
         {
             if (!IsExecuting) return;
 
@@ -310,29 +314,32 @@ namespace Brute_Force_password_cracker.ViewModels
 
         private void AddLog(string message)
         {
-            if (Application.Current.Dispatcher.CheckAccess())
+            var timestamp = DateTime.Now.ToString("HH:mm:ss");
+            var fullMessage = $"{timestamp}: {message}";
+
+            if (Application.Current != null && Application.Current.Dispatcher != null)
             {
-                var timestamp = DateTime.Now.ToString("HH:mm:ss");
-                Logs.Add($"{timestamp}: {message}");
-                if (Logs.Count > 100) Logs.RemoveAt(0);
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Logs.Add(fullMessage);
+                    if (Logs.Count > 100) Logs.RemoveAt(0);
+                });
             }
             else
             {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    var timestamp = DateTime.Now.ToString("HH:mm:ss");
-                    Logs.Add($"{timestamp}: {message}");
-                    if (Logs.Count > 100) Logs.RemoveAt(0);
-                });
+                Logs.Add(fullMessage);
             }
         }
 
         private void ShowMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (Application.Current != null && Application.Current.Dispatcher != null)
             {
-                MessageBox.Show(message, "Result", MessageBoxButton.OK, MessageBoxImage.Information);
-            });
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    MessageBox.Show(message, "Result", MessageBoxButton.OK, MessageBoxImage.Information);
+                });
+            }
         }
 
         #region INotifyPropertyChanged Implementation

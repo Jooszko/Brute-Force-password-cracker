@@ -22,7 +22,7 @@ namespace Brute_Force_password_cracker.Services
         private string _zipPath;
         private string _ruleText;
 
-        public async Task<CrackingResult> CrackPasswordAsync(CrackingSession session, Action<string> logAction, CancellationToken cancellationToken)
+        public virtual async Task<CrackingResult> CrackPasswordAsync(CrackingSession session, Action<string> logAction, CancellationToken cancellationToken)
         {
             _logAction = logAction;
             _zipPath = session.FilePath;
@@ -384,7 +384,7 @@ namespace Brute_Force_password_cracker.Services
             catch { return false; }
         }
 
-        public async Task<CrackingResult> VerifySinglePasswordAsync(string password, CrackingSession session, Action<string> logAction, CancellationToken cancellationToken)
+        public virtual async Task<CrackingResult> VerifySinglePasswordAsync(string password, CrackingSession session, Action<string> logAction, CancellationToken cancellationToken)
         {
             var result = new CrackingResult
             {

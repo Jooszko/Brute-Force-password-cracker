@@ -10,7 +10,7 @@ namespace Brute_Force_password_cracker.Services
 {
     public class DictionaryAttackService
     {
-        public async Task<CrackingResult> TryDictionaryAttackAsync(
+        public virtual async Task<CrackingResult> TryDictionaryAttackAsync(
             string zipPath,
             string dictionaryPath,
             Action<string> logAction,
@@ -83,7 +83,7 @@ namespace Brute_Force_password_cracker.Services
             return result;
         }
 
-        private async Task<bool> VerifyPasswordAsync(string password, string zipPath)
+        public virtual async Task<bool> VerifyPasswordAsync(string password, string zipPath)
         {
             return await Task.Run(() =>
             {
