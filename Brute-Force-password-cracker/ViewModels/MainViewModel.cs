@@ -272,7 +272,7 @@ namespace Brute_Force_password_cracker.ViewModels
                     if (result.Success)
                     {
                         AddLog($"SUCCESS! Password found: {result.FoundPassword}");
-                        AddLog($"Attempts: {result.AttemptsCount}, Duration: {result.Duration:mm\\:ss\\.ff}");
+                        AddLog($"Duration: {result.Duration:mm\\:ss\\.ff}");
                         ShowMessage($"Password found: {result.FoundPassword}\nDuration: {result.Duration:mm\\:ss\\.ff}");
                     }
                     else if (!string.IsNullOrEmpty(result.ErrorMessage))

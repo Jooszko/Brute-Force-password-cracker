@@ -22,6 +22,8 @@ namespace Brute_Force_password_cracker.Services
         private string _zipPath;
         private string _ruleText;
 
+        private long counter = 0;
+
         public virtual async Task<CrackingResult> CrackPasswordAsync(CrackingSession session, Action<string> logAction, CancellationToken cancellationToken)
         {
             _logAction = logAction;
@@ -158,7 +160,7 @@ namespace Brute_Force_password_cracker.Services
 
                             string sPass = new string(pass);
 
-                            if (j % 5000 == 0)
+                            if (j % 1000 == 0)
                             {
                                 _logAction?.Invoke($"[W{id}] Testing: {sPass}");
                             }
@@ -304,8 +306,7 @@ namespace Brute_Force_password_cracker.Services
             {
                 string cand = new string(pass);
 
-                int counter = 0;
-                if (Interlocked.Increment(ref counter) % 5000 == 0)
+                if (Interlocked.Increment(ref counter) % 1000 == 0)
                 {
                     _logAction?.Invoke($"Testing: {cand}");
                 }
@@ -374,7 +375,12 @@ namespace Brute_Force_password_cracker.Services
                     zip.Password = pass;
                     var entry = zip.Entries.FirstOrDefault(e => !e.IsDirectory);
                     if (entry == null) return false;
-                    using (var stream = new System.IO.MemoryStream())
+                    //using (var stream = new System.IO.MemoryStream())
+                    //{
+                    //    entry.Extract(stream);
+                    //}
+
+                    using (var stream = System.IO.Stream.Null)
                     {
                         entry.Extract(stream);
                     }
