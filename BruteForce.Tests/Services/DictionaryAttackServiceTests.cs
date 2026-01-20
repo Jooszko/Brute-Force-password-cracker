@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 
-namespace BruteForce.Tests
+namespace BruteForce.Tests.Services
 {
     public class DictionaryAttackServiceTests : IDisposable
     {
