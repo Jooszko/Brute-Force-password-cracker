@@ -96,12 +96,16 @@ namespace Brute_Force_password_cracker.ViewModels
             get => _isIteratively;
             set
             {
-                if (SetField(ref _isIteratively, value) && value)
+                if(_isDictionary || _isRecursively)
                 {
-                    IsRecursively = false;
-                    IsDictionary = false;
-                    AddLog("Method changed to Iterative");
+                    if (SetField(ref _isIteratively, value) && value)
+                    {
+                        IsRecursively = false;
+                        IsDictionary = false;
+                        AddLog("Method changed to Iterative");
+                    }
                 }
+                
             }
         }
 
@@ -111,11 +115,14 @@ namespace Brute_Force_password_cracker.ViewModels
             get => _isRecursively;
             set
             {
-                if (SetField(ref _isRecursively, value) && value)
+                if (_isDictionary || _isIteratively)
                 {
-                    IsIteratively = false;
-                    IsDictionary = false;
-                    AddLog("Method changed to Recursive");
+                    if (SetField(ref _isRecursively, value) && value)
+                    {
+                        IsIteratively = false;
+                        IsDictionary = false;
+                        AddLog("Method changed to Recursive");
+                    }
                 }
             }
         }
@@ -126,11 +133,14 @@ namespace Brute_Force_password_cracker.ViewModels
             get => _isDictionary;
             set
             {
-                if (SetField(ref _isDictionary, value) && value)
+                if (_isIteratively || _isRecursively)
                 {
-                    IsIteratively = false;
-                    IsRecursively = false;
-                    AddLog("Method changed to Dictionary Attack");
+                    if (SetField(ref _isDictionary, value) && value)
+                    {
+                        IsIteratively = false;
+                        IsRecursively = false;
+                        AddLog("Method changed to Dictionary Attack");
+                    }
                 }
             }
         }
